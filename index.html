@@ -15,6 +15,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -124,7 +126,7 @@
     </div>
   </header>
 
-  <main>
+  <main class="overflow-x-hidden w-full max-w-full">
     <section class="relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden bg-brand-bg border-b border-brand-border">
       <div class="absolute -top-24 -left-24 w-96 h-96 bg-brand-gold/10 rounded-full blur-3xl"></div>
       <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -142,8 +144,9 @@
             </p>
 
             <div class="flex flex-col sm:flex-row items-center lg:justify-start justify-center gap-4 mb-8">
-              <a href="https://wa.me/5541992145814?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20orçamento." target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-8 py-4 rounded-full text-xs uppercase tracking-widest shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 cursor-pointer">
-                Solicitar orçamento
+              <a href="https://wa.me/5541992145814?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20orçamento." target="_blank" rel="noopener noreferrer" class="group w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-7 py-3.5 rounded-full text-xs uppercase tracking-widest shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 cursor-pointer inline-flex items-center justify-center gap-3">
+                <span>Solicitar orçamento</span>
+                <span class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-white transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
               </a>
               <a href="#transformacao" class="w-full sm:w-auto bg-white hover:bg-brand-surfaceAlt text-brand-text border border-brand-border font-bold px-8 py-4 rounded-full text-xs uppercase tracking-widest shadow-sm hover:shadow transition-all transform hover:-translate-y-0.5 cursor-pointer">
                 Ver transformações
@@ -189,21 +192,27 @@
         </div>
 
         <div class="grid md:grid-cols-3 gap-8">
-          <div class="border border-brand-border bg-brand-bg p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-            <div class="w-12 h-12 bg-brand-gold/15 text-brand-goldDark rounded-xl flex items-center justify-center font-display font-bold text-xl mb-6">01</div>
-            <h3 class="font-display text-xl font-bold text-brand-text mb-3">Sem entulho ou ruído</h3>
-            <p class="text-brand-muted text-sm leading-relaxed">Instalação silenciosa e seca, permitindo uso imediato do espaço após a finalização.</p>
-          </div>
-          <div class="border border-brand-border bg-brand-bg p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-            <div class="w-12 h-12 bg-brand-gold/15 text-brand-goldDark rounded-xl flex items-center justify-center font-display font-bold text-xl mb-6">02</div>
-            <h3 class="font-display text-xl font-bold text-brand-text mb-3">Modelos técnicos e vinílicos</h3>
-            <p class="text-brand-muted text-sm leading-relaxed">Opções laváveis com alta resistência para lavabos, dormitórios, halls e lojas.</p>
-          </div>
-          <div class="border border-brand-border bg-brand-bg p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
-            <div class="w-12 h-12 bg-brand-gold/15 text-brand-goldDark rounded-xl flex items-center justify-center font-display font-bold text-xl mb-6">03</div>
-            <h3 class="font-display text-xl font-bold text-brand-text mb-3">Aplicação com encaixe perfeito</h3>
-            <p class="text-brand-muted text-sm leading-relaxed">Continuidade geométrica rigorosa de estampas e emendas invisíveis a olho nu.</p>
-          </div>
+            <div class="border border-brand-border/60 bg-brand-surface p-2 rounded-[2rem] shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
+              <div class="bg-brand-bg p-8 rounded-[calc(2rem-0.5rem)] h-full">
+                <div class="w-12 h-12 bg-brand-gold/15 text-brand-goldDark rounded-xl flex items-center justify-center font-display font-bold text-xl mb-6">01</div>
+                <h3 class="font-display text-xl font-bold text-brand-text mb-3">Sem entulho ou ruído</h3>
+                <p class="text-brand-muted text-sm leading-relaxed">Instalação silenciosa e seca, permitindo uso imediato do espaço após a finalização.</p>
+              </div>
+            </div>
+            <div class="border border-brand-border/60 bg-brand-surface p-2 rounded-[2rem] shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
+              <div class="bg-brand-bg p-8 rounded-[calc(2rem-0.5rem)] h-full">
+                <div class="w-12 h-12 bg-brand-gold/15 text-brand-goldDark rounded-xl flex items-center justify-center font-display font-bold text-xl mb-6">02</div>
+                <h3 class="font-display text-xl font-bold text-brand-text mb-3">Modelos técnicos e vinílicos</h3>
+                <p class="text-brand-muted text-sm leading-relaxed">Opções laváveis com alta resistência para lavabos, dormitórios, halls e lojas.</p>
+              </div>
+            </div>
+            <div class="border border-brand-border/60 bg-brand-surface p-2 rounded-[2rem] shadow-sm hover:shadow-md transition-all duration-500 hover:-translate-y-1">
+              <div class="bg-brand-bg p-8 rounded-[calc(2rem-0.5rem)] h-full">
+                <div class="w-12 h-12 bg-brand-gold/15 text-brand-goldDark rounded-xl flex items-center justify-center font-display font-bold text-xl mb-6">03</div>
+                <h3 class="font-display text-xl font-bold text-brand-text mb-3">Aplicação com encaixe perfeito</h3>
+                <p class="text-brand-muted text-sm leading-relaxed">Continuidade geométrica rigorosa de estampas e emendas invisíveis a olho nu.</p>
+              </div>
+            </div>
         </div>
       </div>
     </section>
@@ -242,7 +251,7 @@
           </p>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 grid-flow-dense">
           <div class="border border-brand-border bg-brand-bg rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:border-brand-gold hover:shadow-xl hover:-translate-y-1">
             <img src="https://images.unsplash.com/photo-1615873968403-89e068629265?auto=format&fit=crop&q=80&w=600" alt="Papel de parede botânico" class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105" loading="lazy" width="600" height="400">
             <div class="p-6 flex-1 flex flex-col justify-between">

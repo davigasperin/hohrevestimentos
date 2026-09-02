@@ -1,4 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // GSAP Animations & ScrollTriggers
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Fade In
+    gsap.from('.font-display', {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      stagger: 0.2,
+      ease: 'power3.out'
+    });
+
+    // Scroll reveal for cards & sections
+    gsap.utils.toArray('section').forEach((section) => {
+      gsap.from(section.children, {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        },
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power2.out'
+      });
+    });
+  }
+
   const menuBtn = document.getElementById('mobileMenuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
   const mobileLinks = document.querySelectorAll('.mobile-link');
