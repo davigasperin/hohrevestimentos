@@ -1,4 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Helper para disparar eventos de conversão
+  const trackConversion = (eventName, params = {}) => {
+    if (typeof fbq === 'function') {
+      fbq('track', eventName === 'generate_lead' ? 'Lead' : 'Contact', params);
+    }
+    if (typeof gtag === 'function') {
+      gtag('event', eventName, params);
+    }
+  };
+
+  // Rastrear cliques em links do WhatsApp
+  const waLinks = document.querySelectorAll('a[href*="wa.me"]');
+  waLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      const urlParams = new URLSearchParams(link.href.split('?')[1] || '');
+      const text = urlParams.get('text') || 'Solicitação via WhatsApp';
+      trackConversion('contact', { event_label: text, channel: 'WhatsApp' });
+    });
+  });
 
   const menuBtn = document.getElementById('mobileMenuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
@@ -49,6 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const ambiente = document.getElementById('ambiente').value;
 
       const text = `Olá! Meu nome é ${encodeURIComponent(name)} e gostaria de um orçamento para aplicação de papel de parede no meu/minha ${encodeURIComponent(ambiente)}.`;
+      trackConversion('generate_lead', { ambiente: ambiente, name: name });
       window.open(`https://wa.me/5541992145814?text=${text}`, '_blank');
     });
   }
