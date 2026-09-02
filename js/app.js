@@ -1,8 +1,7 @@
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero Fade In
     gsap.from('.font-display', {
       opacity: 0,
       y: 30,
@@ -11,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
       ease: 'power3.out'
     });
 
-    // Scroll reveal for cards & sections
     gsap.utils.toArray('section').forEach((section) => {
       gsap.from(section.children, {
         scrollTrigger: {
@@ -27,6 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
 
   const menuBtn = document.getElementById('mobileMenuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
@@ -57,8 +58,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const beforeImg = document.getElementById('sliderBefore');
 
   if (range && beforeImg) {
+    let ticking = false;
     range.addEventListener('input', (e) => {
-      beforeImg.style.width = `${e.target.value}%`;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          beforeImg.style.width = `${e.target.value}%`;
+          ticking = false;
+        });
+        ticking = true;
+      }
     });
   }
 
