@@ -15,35 +15,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              bg: '#FAF8F5',
-              surface: '#FFFFFF',
-              surfaceAlt: '#F3EFEA',
-              border: '#E7E1D7',
-              gold: '#C5A059',
-              goldHover: '#B28E47',
-              goldDark: '#8C6F34',
-              text: '#1C1917',
-              muted: '#57534E'
-            }
-          },
-          fontFamily: {
-            sans: ['Outfit', 'sans-serif'],
-            display: ['Cinzel', 'serif']
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="preload" href="css/styles.css" as="style">
+  <link rel="stylesheet" href="css/styles.css"> 
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin> 
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=70&w=1000" fetchpriority="high"> 
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
   <style>
     @keyframes pulseGlow {
@@ -65,7 +42,7 @@
     "@context": "https://schema.org",
     "@type": "HomeAndConstructionBusiness",
     "name": "HOH Revestimentos",
-    "image": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=1200",
+    "image": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=70&w=800",
     "url": "https://www.instagram.com/hohrevestimentos/",
     "telephone": "+55 41 99214-5814",
     "areaServed": [
@@ -164,7 +141,7 @@
 
           <div class="relative lg:min-h-[620px]">
             <div class="relative h-[440px] sm:h-[560px] lg:h-[620px] rounded-3xl overflow-hidden shadow-2xl border border-brand-border">
-              <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=85&w=1400" alt="Ambiente sofisticado com papel de parede HOH" class="w-full h-full object-cover" loading="eager" width="1400" height="1000">
+              <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=70&w=1000" alt="Ambiente sofisticado com papel de parede HOH" class="w-full h-full object-cover" loading="eager" fetchpriority="high" decoding="async" width="1000" height="1000">
               <div class="absolute inset-0 bg-gradient-to-t from-stone-950/60 via-transparent to-transparent"></div>
               <div class="absolute left-6 right-6 bottom-6 text-white">
                 <p class="font-display text-2xl sm:text-3xl font-semibold">Mudança visível. Intervenção mínima.</p>
@@ -229,11 +206,11 @@
         </div>
 
         <div class="relative w-full h-[360px] sm:h-[500px] rounded-3xl overflow-hidden border border-brand-border shadow-2xl select-none" id="sliderContainer">
-          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200" alt="Ambiente decorado com papel de parede HOH" class="absolute inset-0 w-full h-full object-cover" loading="lazy" width="1200" height="800">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=70&w=800" alt="Ambiente decorado com papel de parede HOH" class="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" width="1200" height="800">
           <span class="absolute top-4 right-4 bg-brand-goldDark text-white font-bold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider shadow">Com papel HOH</span>
 
           <div id="sliderBefore" class="absolute inset-0 w-1/2 overflow-hidden border-r border-white shadow-2xl">
-            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=1200" alt="Ambiente sem papel de parede" class="absolute inset-0 w-full h-full object-cover max-w-none" loading="lazy" width="1200" height="800">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=70&w=800" alt="Ambiente sem papel de parede" class="absolute inset-0 w-full h-full object-cover max-w-none" loading="lazy" decoding="async" width="1200" height="800">
             <span class="absolute top-4 left-4 bg-stone-900/80 text-white font-bold text-xs px-4 py-1.5 rounded-full uppercase tracking-wider backdrop-blur-sm">Sem revestimento</span>
           </div>
 
@@ -253,7 +230,7 @@
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 grid-flow-dense">
           <div class="border border-brand-border bg-brand-bg rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:border-brand-gold hover:shadow-xl hover:-translate-y-1">
-            <img src="https://images.unsplash.com/photo-1615873968403-89e068629265?auto=format&fit=crop&q=80&w=600" alt="Papel de parede botânico" class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105" loading="lazy" width="600" height="400">
+            <img src="https://images.unsplash.com/photo-1615873968403-89e068629265?auto=format&fit=crop&q=70&w=600" alt="Papel de parede botânico" class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105" loading="lazy" decoding="async" width="600" height="400">
             <div class="p-6 flex-1 flex flex-col justify-between">
               <div>
                 <h3 class="font-display text-xl font-bold text-brand-text mb-2">Botânico & Floral</h3>
@@ -266,7 +243,7 @@
           </div>
 
           <div class="border border-brand-border bg-brand-bg rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:border-brand-gold hover:shadow-xl hover:-translate-y-1">
-            <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80&w=600" alt="Papel de parede geométrico" class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105" loading="lazy" width="600" height="400">
+            <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=70&w=600" alt="Papel de parede geométrico" class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105" loading="lazy" decoding="async" width="600" height="400">
             <div class="p-6 flex-1 flex flex-col justify-between">
               <div>
                 <h3 class="font-display text-xl font-bold text-brand-text mb-2">Geométrico & Moderno</h3>
@@ -279,7 +256,7 @@
           </div>
 
           <div class="border border-brand-border bg-brand-bg rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:border-brand-gold hover:shadow-xl hover:-translate-y-1">
-            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=600" alt="Papel de parede texturizado" class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105" loading="lazy" width="600" height="400">
+            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=70&w=600" alt="Papel de parede texturizado" class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105" loading="lazy" decoding="async" width="600" height="400">
             <div class="p-6 flex-1 flex flex-col justify-between">
               <div>
                 <h3 class="font-display text-xl font-bold text-brand-text mb-2">Linho & Texturas Nobres</h3>
@@ -292,7 +269,7 @@
           </div>
 
           <div class="border border-brand-border bg-brand-bg rounded-2xl overflow-hidden flex flex-col transition-all duration-300 hover:border-brand-gold hover:shadow-xl hover:-translate-y-1">
-            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=600" alt="Papel de parede vinílico lavável" class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105" loading="lazy" width="600" height="400">
+            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=70&w=600" alt="Papel de parede vinílico lavável" class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105" loading="lazy" decoding="async" width="600" height="400">
             <div class="p-6 flex-1 flex flex-col justify-between">
               <div>
                 <h3 class="font-display text-xl font-bold text-brand-text mb-2">Vinílico & Lavável</h3>

@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // GSAP Animations & ScrollTriggers
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 
