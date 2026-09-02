@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const ambiente = document.getElementById('ambiente').value;
 
       const text = `Olá! Meu nome é ${encodeURIComponent(name)} e gostaria de um orçamento para aplicação de papel de parede no meu/minha ${encodeURIComponent(ambiente)}.`;
-      window.open(`https://wa.me/5500000000000?text=${text}`, '_blank');
+      window.open(`https://wa.me/5541992145814?text=${text}`, '_blank');
     });
   }
 });
