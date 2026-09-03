@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-N26ZE3RGWF"></script>
+  <!-- Analytics & Pixel (Lazy Loaded) -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
 
-    gtag('config', 'G-N26ZE3RGWF');
-  </script>
-  <script>
-    function loadMetaPixel() {
-      if (window.metaPixelLoaded) return;
-      window.metaPixelLoaded = true;
+    function loadTrackingScripts() {
+      if (window.trackingScriptsLoaded) return;
+      window.trackingScriptsLoaded = true;
+
+      // Google Tag Manager
+      const gtmScript = document.createElement('script');
+      gtmScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-N26ZE3RGWF';
+      gtmScript.async = true;
+      document.head.appendChild(gtmScript);
+      gtag('config', 'G-N26ZE3RGWF');
+
+      // Meta Pixel
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -27,14 +32,16 @@
     }
 
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(loadMetaPixel, { timeout: 3000 });
+      requestIdleCallback(loadTrackingScripts, { timeout: 3000 });
     } else {
-      setTimeout(loadMetaPixel, 2000);
+      setTimeout(loadTrackingScripts, 2000);
     }
     ['touchstart', 'scroll', 'mousemove'].forEach(event => {
-      window.addEventListener(event, loadMetaPixel, { once: true, passive: true });
+      window.addEventListener(event, loadTrackingScripts, { once: true, passive: true });
     });
   </script>
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <link rel="dns-prefetch" href="https://connect.facebook.net">
   <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
   <meta charset="UTF-8">
