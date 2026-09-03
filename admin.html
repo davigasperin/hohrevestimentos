@@ -6,8 +6,15 @@
     <title>HOH Revestimentos - Painel Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .upload-box { position: relative; border: 2px dashed #cbd5e1; border-radius: 0.5rem; padding: 1rem; text-align: center; cursor: pointer; transition: border-color 0.2s; }
+        .upload-box:hover { border-color: #2563eb; }
+        .upload-box input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+        .upload-box img { max-height: 120px; margin: 0 auto; border-radius: 0.375rem; }
+        .upload-box .uploading { color: #2563eb; font-weight: 600; }
+    </style>
 </head>
-<body class="bg-gray-100 p-8">
+<body class="bg-gray-100 p-4 sm:p-8">
     <div id="login-screen" class="max-w-md mx-auto bg-white p-8 rounded shadow">
         <h2 class="text-2xl font-bold mb-4">Login Admin</h2>
         <div class="space-y-4">
@@ -48,8 +55,12 @@
                     <input type="text" id="hero-subtitle" class="w-full border p-2 rounded" placeholder="Ex: Instalação profissional sem sujeira">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">URL da Foto Hero</label>
-                    <input type="text" id="hero-image" class="w-full border p-2 rounded" placeholder="Ex: assets/images/hero-768.avif ou link web">
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Foto Hero</label>
+                    <div class="upload-box" id="box-hero-image">
+                        <input type="file" accept="image/*" onchange="handleUpload(this, 'hero-image')">
+                        <p class="text-sm text-gray-400" id="label-hero-image">Clique ou arraste uma imagem</p>
+                        <img id="preview-hero-image" class="hidden mt-2">
+                    </div>
                 </div>
                 <button onclick="saveHero()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Salvar Hero</button>
             </div>
@@ -66,13 +77,23 @@
                     <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Descrição</label>
                     <textarea id="impact-desc" class="w-full border p-2 rounded h-24" placeholder="Ex: Arraste o cursor para comparar a parede lisa..."></textarea>
                 </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Foto Antes (Parede Lisa)</label>
-                    <input type="text" id="impact-before" class="w-full border p-2 rounded" placeholder="URL da Foto Antes">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Foto Depois (Com Revestimento)</label>
-                    <input type="text" id="impact-after" class="w-full border p-2 rounded" placeholder="URL da Foto Depois">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Foto Antes (Parede Lisa)</label>
+                        <div class="upload-box" id="box-impact-before">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'impact-before')">
+                            <p class="text-sm text-gray-400" id="label-impact-before">Clique ou arraste</p>
+                            <img id="preview-impact-before" class="hidden mt-2">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Foto Depois (Com Revestimento)</label>
+                        <div class="upload-box" id="box-impact-after">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'impact-after')">
+                            <p class="text-sm text-gray-400" id="label-impact-after">Clique ou arraste</p>
+                            <img id="preview-impact-after" class="hidden mt-2">
+                        </div>
+                    </div>
                 </div>
                 <button onclick="saveImpact()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Salvar Impacto</button>
             </div>
@@ -95,38 +116,70 @@
                 </div>
                 
                 <h3 class="font-semibold text-gray-700 pt-2">Fotos dos 8 Cards de Projetos</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Card 1 (Mural Infantil)</label>
-                        <input type="text" id="project-img-1" class="w-full border p-2 rounded" placeholder="URL Foto 1">
+                        <div class="upload-box" id="box-project-img-1">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-1')">
+                            <p class="text-sm text-gray-400" id="label-project-img-1">Enviar foto</p>
+                            <img id="preview-project-img-1" class="hidden mt-2">
+                        </div>
                     </div>
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Card 2 (Dormitório Bebê)</label>
-                        <input type="text" id="project-img-2" class="w-full border p-2 rounded" placeholder="URL Foto 2">
+                        <div class="upload-box" id="box-project-img-2">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-2')">
+                            <p class="text-sm text-gray-400" id="label-project-img-2">Enviar foto</p>
+                            <img id="preview-project-img-2" class="hidden mt-2">
+                        </div>
                     </div>
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Card 3 (Lavabo)</label>
-                        <input type="text" id="project-img-3" class="w-full border p-2 rounded" placeholder="URL Foto 3">
+                        <div class="upload-box" id="box-project-img-3">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-3')">
+                            <p class="text-sm text-gray-400" id="label-project-img-3">Enviar foto</p>
+                            <img id="preview-project-img-3" class="hidden mt-2">
+                        </div>
                     </div>
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Card 4 (Dormitório Casal)</label>
-                        <input type="text" id="project-img-4" class="w-full border p-2 rounded" placeholder="URL Foto 4">
+                        <div class="upload-box" id="box-project-img-4">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-4')">
+                            <p class="text-sm text-gray-400" id="label-project-img-4">Enviar foto</p>
+                            <img id="preview-project-img-4" class="hidden mt-2">
+                        </div>
                     </div>
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Card 5 (Linho Acinzentado)</label>
-                        <input type="text" id="project-img-5" class="w-full border p-2 rounded" placeholder="URL Foto 5">
+                        <div class="upload-box" id="box-project-img-5">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-5')">
+                            <p class="text-sm text-gray-400" id="label-project-img-5">Enviar foto</p>
+                            <img id="preview-project-img-5" class="hidden mt-2">
+                        </div>
                     </div>
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Card 6 (Composição Neutra)</label>
-                        <input type="text" id="project-img-6" class="w-full border p-2 rounded" placeholder="URL Foto 6">
+                        <div class="upload-box" id="box-project-img-6">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-6')">
+                            <p class="text-sm text-gray-400" id="label-project-img-6">Enviar foto</p>
+                            <img id="preview-project-img-6" class="hidden mt-2">
+                        </div>
                     </div>
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Card 7 (Destaque Rubi)</label>
-                        <input type="text" id="project-img-7" class="w-full border p-2 rounded" placeholder="URL Foto 7">
+                        <div class="upload-box" id="box-project-img-7">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-7')">
+                            <p class="text-sm text-gray-400" id="label-project-img-7">Enviar foto</p>
+                            <img id="preview-project-img-7" class="hidden mt-2">
+                        </div>
                     </div>
                     <div>
                         <label class="block text-xs text-gray-500 mb-1">Card 8 (Dormitório Acolhedor)</label>
-                        <input type="text" id="project-img-8" class="w-full border p-2 rounded" placeholder="URL Foto 8">
+                        <div class="upload-box" id="box-project-img-8">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-8')">
+                            <p class="text-sm text-gray-400" id="label-project-img-8">Enviar foto</p>
+                            <img id="preview-project-img-8" class="hidden mt-2">
+                        </div>
                     </div>
                 </div>
                 <button onclick="saveProjects()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Salvar Projetos</button>
@@ -138,15 +191,14 @@
         const SUPABASE_URL = 'https://btzvozjeznzjcprockde.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0enZvemplem56amNwcm9ja2RlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0NjM3NDcsImV4cCI6MjEwNDAzOTc0N30.FPdbc3WlQP4u6NTW78KhKXN3AWRIbpvruDS8Lz1Q_DM';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const BUCKET = 'fotos';
 
         let cachedData = {};
+        const uploadedUrls = {};
 
-        // Checa sessão ao carregar a página
         document.addEventListener('DOMContentLoaded', async () => {
             const { data: { session } } = await supabaseClient.auth.getSession();
-            if (session) {
-                showAdmin(session.user.email);
-            }
+            if (session) showAdmin(session.user.email);
         });
 
         async function login() {
@@ -159,16 +211,13 @@
             btn.disabled = true;
             btn.textContent = 'Verificando...';
 
-            const { data, error } = await supabaseClient.auth.signInWithPassword({
-                email,
-                password
-            });
+            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
 
             btn.disabled = false;
             btn.textContent = 'Entrar';
 
             if (error) {
-                errorEl.textContent = 'Credenciais inválidas ou erro de login: ' + error.message;
+                errorEl.textContent = 'Credenciais inválidas: ' + error.message;
                 errorEl.classList.remove('hidden');
             } else if (data?.session) {
                 showAdmin(data.session.user.email);
@@ -188,6 +237,45 @@
             loadData();
         }
 
+        async function handleUpload(input, fieldId) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const label = document.getElementById(`label-${fieldId}`);
+            const preview = document.getElementById(`preview-${fieldId}`);
+
+            label.textContent = 'Enviando...';
+            label.classList.add('uploading');
+
+            const ext = file.name.split('.').pop();
+            const path = `${fieldId}-${Date.now()}.${ext}`;
+
+            const { data, error } = await supabaseClient.storage
+                .from(BUCKET)
+                .upload(path, file, { cacheControl: '31536000', upsert: true });
+
+            if (error) {
+                label.textContent = 'Erro: ' + error.message;
+                label.classList.remove('uploading');
+                return;
+            }
+
+            const { data: urlData } = supabaseClient.storage.from(BUCKET).getPublicUrl(path);
+            const publicUrl = urlData.publicUrl;
+
+            uploadedUrls[fieldId] = publicUrl;
+
+            preview.src = publicUrl;
+            preview.classList.remove('hidden');
+            label.textContent = 'Enviado com sucesso!';
+            label.classList.remove('uploading');
+            label.classList.add('text-green-600');
+        }
+
+        function getUrl(fieldId) {
+            return uploadedUrls[fieldId] || '';
+        }
+
         async function loadData() {
             const status = document.getElementById('save-status');
             status.textContent = 'Carregando dados...';
@@ -202,26 +290,25 @@
                     console.error('Erro ao buscar Supabase:', error);
                 }
 
-                cachedData = (data && data.data) ? data.data : (JSON.parse(localStorage.getItem('hoh_data')) || {});
+                cachedData = (data && data.data) ? data.data : {};
 
                 if (cachedData.hero) {
                     document.getElementById('hero-title').value = cachedData.hero.title || '';
                     document.getElementById('hero-subtitle').value = cachedData.hero.subtitle || '';
-                    document.getElementById('hero-image').value = cachedData.hero.image || '';
+                    setPreview('hero-image', cachedData.hero.image);
                 }
                 if (cachedData.impact) {
                     document.getElementById('impact-title').value = cachedData.impact.title || '';
                     document.getElementById('impact-desc').value = cachedData.impact.desc || '';
-                    document.getElementById('impact-before').value = cachedData.impact.before || '';
-                    document.getElementById('impact-after').value = cachedData.impact.after || '';
+                    setPreview('impact-before', cachedData.impact.before);
+                    setPreview('impact-after', cachedData.impact.after);
                 }
                 if (cachedData.projects) {
                     document.getElementById('projects-subtitle').value = cachedData.projects.subtitle || '';
                     document.getElementById('projects-title').value = cachedData.projects.title || '';
                     document.getElementById('projects-desc').value = cachedData.projects.desc || '';
                     for (let i = 1; i <= 8; i++) {
-                        const el = document.getElementById(`project-img-${i}`);
-                        if (el) el.value = cachedData.projects[`img${i}`] || '';
+                        setPreview(`project-img-${i}`, cachedData.projects[`img${i}`]);
                     }
                 }
                 status.textContent = 'Pronto';
@@ -231,11 +318,25 @@
             }
         }
 
+        function setPreview(fieldId, url) {
+            if (!url) return;
+            const preview = document.getElementById(`preview-${fieldId}`);
+            const label = document.getElementById(`label-${fieldId}`);
+            if (preview) {
+                preview.src = url;
+                preview.classList.remove('hidden');
+            }
+            if (label) {
+                label.textContent = 'Foto atual carregada';
+                label.classList.add('text-green-600');
+            }
+            uploadedUrls[fieldId] = url;
+        }
+
         async function saveData(key, partialData) {
             const status = document.getElementById('save-status');
-            status.textContent = 'Salvando no Supabase...';
+            status.textContent = 'Salvando...';
             cachedData[key] = partialData;
-            localStorage.setItem('hoh_data', JSON.stringify(cachedData));
 
             try {
                 const { error } = await supabaseClient
@@ -247,16 +348,14 @@
                     });
 
                 if (error) {
-                    console.error('Erro ao salvar no Supabase:', error);
-                    alert('Salvo apenas localmente. Erro no Supabase: ' + error.message);
-                    status.textContent = 'Erro ao sincronizar';
+                    alert('Erro ao salvar: ' + error.message);
+                    status.textContent = 'Erro';
                 } else {
-                    alert('Alterações salvas e sincronizadas com sucesso!');
-                    status.textContent = 'Salvo no Supabase';
+                    alert('Salvo com sucesso!');
+                    status.textContent = 'Salvo';
                 }
             } catch (err) {
-                console.error(err);
-                alert('Erro ao conectar com Supabase: ' + err.message);
+                alert('Erro de conexão: ' + err.message);
                 status.textContent = 'Erro de conexão';
             }
         }
@@ -265,7 +364,7 @@
             saveData('hero', {
                 title: document.getElementById('hero-title').value,
                 subtitle: document.getElementById('hero-subtitle').value,
-                image: document.getElementById('hero-image').value
+                image: getUrl('hero-image')
             });
         }
 
@@ -273,8 +372,8 @@
             saveData('impact', {
                 title: document.getElementById('impact-title').value,
                 desc: document.getElementById('impact-desc').value,
-                before: document.getElementById('impact-before').value,
-                after: document.getElementById('impact-after').value
+                before: getUrl('impact-before'),
+                after: getUrl('impact-after')
             });
         }
 
@@ -285,8 +384,7 @@
                 desc: document.getElementById('projects-desc').value
             };
             for (let i = 1; i <= 8; i++) {
-                const el = document.getElementById(`project-img-${i}`);
-                if (el) projectsData[`img${i}`] = el.value;
+                projectsData[`img${i}`] = getUrl(`project-img-${i}`);
             }
             saveData('projects', projectsData);
         }
