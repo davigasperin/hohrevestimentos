@@ -390,6 +390,8 @@
                 .upload(path, file, { cacheControl: '31536000', upsert: true });
 
             if (error) {
+                console.error('Erro no upload Storage:', error);
+                alert('Erro no upload para o Supabase Storage: ' + error.message + '\nVerifique se o bucket "fotos" foi criado e tem permissão RLS.');
                 label.textContent = 'Erro: ' + error.message;
                 label.classList.remove('uploading');
                 return;
@@ -402,7 +404,7 @@
 
             preview.src = publicUrl;
             preview.classList.remove('hidden');
-            label.textContent = 'Enviado com sucesso!';
+            label.textContent = 'Foto carregada!';
             label.classList.remove('uploading');
             label.classList.add('text-green-600');
         }
