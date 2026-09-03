@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOH Revestimentos - Painel Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div id="login-screen" class="max-w-md mx-auto bg-white p-8 rounded shadow">
+        <h2 class="text-2xl font-bold mb-4">Login Admin</h2>
+        <input type="password" id="password" class="w-full border p-2 mb-4" placeholder="Senha">
+        <button onclick="login()" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Entrar</button>
+    </div>
+
+    <div id="admin-panel" class="max-w-4xl mx-auto hidden space-y-8 pb-16">
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold">Painel Administrativo</h1>
+            <span id="save-status" class="text-sm font-semibold text-gray-500"></span>
+        </div>
+        
+        <div class="bg-white p-6 rounded shadow">
+            <h2 class="text-xl font-bold mb-4">Seção Hero</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Título Hero</label>
+                    <input type="text" id="hero-title" class="w-full border p-2 rounded" placeholder="Ex: Papel de Parede em Curitiba">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Subtítulo Hero</label>
+                    <input type="text" id="hero-subtitle" class="w-full border p-2 rounded" placeholder="Ex: Instalação profissional sem sujeira">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">URL da Foto Hero</label>
+                    <input type="text" id="hero-image" class="w-full border p-2 rounded" placeholder="Ex: assets/images/hero-768.avif ou link web">
+                </div>
+                <button onclick="saveHero()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Salvar Hero</button>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded shadow">
+            <h2 class="text-xl font-bold mb-4">O impacto visual no ambiente (Antes / Depois)</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Foto Antes (Parede Lisa)</label>
+                    <input type="text" id="impact-before" class="w-full border p-2 rounded" placeholder="URL da Foto Antes">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Foto Depois (Com Revestimento)</label>
+                    <input type="text" id="impact-after" class="w-full border p-2 rounded" placeholder="URL da Foto Depois">
+                </div>
+                <button onclick="saveImpact()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Salvar Impacto</button>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded shadow">
+            <h2 class="text-xl font-bold mb-4">Projetos reais executados</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Subtítulo / Tag Superior</label>
+                    <input type="text" id="projects-subtitle" class="w-full border p-2 rounded" placeholder="Ex: Projetos reais executados">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Título Principal</label>
+                    <input type="text" id="projects-title" class="w-full border p-2 rounded" placeholder="Ex: Transformações recentes">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Descrição</label>
+                    <textarea id="projects-desc" class="w-full border p-2 rounded h-24" placeholder="Descrição dos projetos"></textarea>
+                </div>
+                
+                <h3 class="font-semibold text-gray-700 pt-2">Fotos dos 8 Cards de Projetos</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Card 1 (Mural Infantil)</label>
+                        <input type="text" id="project-img-1" class="w-full border p-2 rounded" placeholder="URL Foto 1">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Card 2 (Dormitório Bebê)</label>
+                        <input type="text" id="project-img-2" class="w-full border p-2 rounded" placeholder="URL Foto 2">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Card 3 (Lavabo)</label>
+                        <input type="text" id="project-img-3" class="w-full border p-2 rounded" placeholder="URL Foto 3">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Card 4 (Dormitório Casal)</label>
+                        <input type="text" id="project-img-4" class="w-full border p-2 rounded" placeholder="URL Foto 4">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Card 5 (Linho Acinzentado)</label>
+                        <input type="text" id="project-img-5" class="w-full border p-2 rounded" placeholder="URL Foto 5">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Card 6 (Composição Neutra)</label>
+                        <input type="text" id="project-img-6" class="w-full border p-2 rounded" placeholder="URL Foto 6">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Card 7 (Destaque Rubi)</label>
+                        <input type="text" id="project-img-7" class="w-full border p-2 rounded" placeholder="URL Foto 7">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-500 mb-1">Card 8 (Dormitório Acolhedor)</label>
+                        <input type="text" id="project-img-8" class="w-full border p-2 rounded" placeholder="URL Foto 8">
+                    </div>
+                </div>
+                <button onclick="saveProjects()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Salvar Projetos</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://btzvozjeznzjcprockde.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0enZvemplem56amNwcm9ja2RlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0NjM3NDcsImV4cCI6MjEwNDAzOTc0N30.FPdbc3WlQP4u6NTW78KhKXN3AWRIbpvruDS8Lz1Q_DM';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let cachedData = {};
+
+        function login() {
+            if (document.getElementById('password').value === 'hohadmin2024') {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+                loadData();
+            } else {
+                alert('Senha incorreta');
+            }
+        }
+
+        async function loadData() {
+            const status = document.getElementById('save-status');
+            status.textContent = 'Carregando dados...';
+            try {
+                const { data, error } = await supabaseClient
+                    .from('site_content')
+                    .select('data')
+                    .eq('id', 'homepage')
+                    .single();
+
+                if (error && error.code !== 'PGRST116') {
+                    console.error('Erro ao buscar Supabase:', error);
+                }
+
+                cachedData = (data && data.data) ? data.data : (JSON.parse(localStorage.getItem('hoh_data')) || {});
+
+                if (cachedData.hero) {
+                    document.getElementById('hero-title').value = cachedData.hero.title || '';
+                    document.getElementById('hero-subtitle').value = cachedData.hero.subtitle || '';
+                    document.getElementById('hero-image').value = cachedData.hero.image || '';
+                }
+                if (cachedData.impact) {
+                    document.getElementById('impact-before').value = cachedData.impact.before || '';
+                    document.getElementById('impact-after').value = cachedData.impact.after || '';
+                }
+                if (cachedData.projects) {
+                    document.getElementById('projects-subtitle').value = cachedData.projects.subtitle || '';
+                    document.getElementById('projects-title').value = cachedData.projects.title || '';
+                    document.getElementById('projects-desc').value = cachedData.projects.desc || '';
+                    for (let i = 1; i <= 8; i++) {
+                        const el = document.getElementById(`project-img-${i}`);
+                        if (el) el.value = cachedData.projects[`img${i}`] || '';
+                    }
+                }
+                status.textContent = 'Pronto';
+            } catch (err) {
+                console.error(err);
+                status.textContent = 'Erro ao carregar';
+            }
+        }
+
+        async function saveData(key, partialData) {
+            const status = document.getElementById('save-status');
+            status.textContent = 'Salvando no Supabase...';
+            cachedData[key] = partialData;
+            localStorage.setItem('hoh_data', JSON.stringify(cachedData));
+
+            try {
+                const { error } = await supabaseClient
+                    .from('site_content')
+                    .upsert({
+                        id: 'homepage',
+                        data: cachedData,
+                        updated_at: new Date().toISOString()
+                    });
+
+                if (error) {
+                    console.error('Erro ao salvar no Supabase:', error);
+                    alert('Salvo apenas localmente. Erro no Supabase: ' + error.message);
+                    status.textContent = 'Erro ao sincronizar';
+                } else {
+                    alert('Alterações salvas e sincronizadas com sucesso!');
+                    status.textContent = 'Salvo no Supabase';
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erro ao conectar com Supabase: ' + err.message);
+                status.textContent = 'Erro de conexão';
+            }
+        }
+
+        function saveHero() {
+            saveData('hero', {
+                title: document.getElementById('hero-title').value,
+                subtitle: document.getElementById('hero-subtitle').value,
+                image: document.getElementById('hero-image').value
+            });
+        }
+
+        function saveImpact() {
+            saveData('impact', {
+                before: document.getElementById('impact-before').value,
+                after: document.getElementById('impact-after').value
+            });
+        }
+
+        function saveProjects() {
+            const projectsData = {
+                subtitle: document.getElementById('projects-subtitle').value,
+                title: document.getElementById('projects-title').value,
+                desc: document.getElementById('projects-desc').value
+            };
+            for (let i = 1; i <= 8; i++) {
+                const el = document.getElementById(`project-img-${i}`);
+                if (el) projectsData[`img${i}`] = el.value;
+            }
+            saveData('projects', projectsData);
+        }
+    </script>
+</body>
+</html>

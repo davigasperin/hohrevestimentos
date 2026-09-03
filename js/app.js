@@ -73,4 +73,81 @@ document.addEventListener('DOMContentLoaded', () => {
       window.open(`https://wa.me/5541992145814?text=${text}`, '_blank');
     });
   }
+
+  // Carregar dados salvos (Supabase com fallback para LocalStorage)
+  const SUPABASE_URL = 'https://btzvozjeznzjcprockde.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ0enZvemplem56amNwcm9ja2RlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg0NjM3NDcsImV4cCI6MjEwNDAzOTc0N30.FPdbc3WlQP4u6NTW78KhKXN3AWRIbpvruDS8Lz1Q_DM';
+
+  const applyDataToDOM = (data) => {
+    if (!data) return;
+
+    // Atualiza Hero
+    if (data.hero) {
+      if (data.hero.title) {
+        const h1 = document.querySelector('h1');
+        if (h1) h1.innerText = data.hero.title;
+      }
+      if (data.hero.subtitle) {
+        const sub = document.querySelector('section p.text-brand-muted');
+        if (sub) sub.innerText = data.hero.subtitle;
+      }
+      if (data.hero.image) {
+        const heroImg = document.querySelector('img[src*="hero"]');
+        if (heroImg) heroImg.src = data.hero.image;
+      }
+    }
+
+    // Atualiza Impacto Visual
+    if (data.impact) {
+      const sliderImgs = document.querySelectorAll('#sliderBefore img, #sliderBefore + img, .relative.w-full.aspect-\\[4\\/3\\] img');
+      if (sliderImgs.length >= 2) {
+        if (data.impact.before) sliderImgs[0].src = data.impact.before;
+        if (data.impact.after) sliderImgs[1].src = data.impact.after;
+      }
+    }
+
+    // Atualiza Projetos
+    if (data.projects) {
+      const projSection = document.getElementById('projetos');
+      if (projSection) {
+        const subEl = projSection.querySelector('.text-brand-goldDark');
+        const titleEl = projSection.querySelector('h2');
+        const descEl = projSection.querySelector('p.text-brand-muted');
+
+        if (subEl && data.projects.subtitle) {
+          subEl.innerHTML = `<span class="w-6 h-px bg-brand-gold"></span> ${data.projects.subtitle}`;
+        }
+        if (titleEl && data.projects.title) titleEl.innerText = data.projects.title;
+        if (descEl && data.projects.desc) descEl.innerText = data.projects.desc;
+
+        const cardImgs = projSection.querySelectorAll('img');
+        for (let i = 1; i <= 8; i++) {
+          if (cardImgs[i - 1] && data.projects[`img${i}`]) {
+            cardImgs[i - 1].src = data.projects[`img${i}`];
+          }
+        }
+      }
+    }
+  };
+
+  // 1. Aplicação imediata do cache local
+  const localCache = JSON.parse(localStorage.getItem('hoh_data'));
+  if (localCache) applyDataToDOM(localCache);
+
+  // 2. Busca no Supabase para dados atualizados
+  if (typeof supabase !== 'undefined' && supabase.createClient) {
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    supabaseClient
+      .from('site_content')
+      .select('data')
+      .eq('id', 'homepage')
+      .single()
+      .then(({ data, error }) => {
+        if (!error && data && data.data) {
+          applyDataToDOM(data.data);
+          localStorage.setItem('hoh_data', JSON.stringify(data.data));
+        }
+      })
+      .catch(console.error);
+  }
 });
