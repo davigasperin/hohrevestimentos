@@ -160,20 +160,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const localCache = JSON.parse(localStorage.getItem('hoh_data'));
   if (localCache) applyDataToDOM(localCache);
 
-  // 2. Busca no Supabase para dados atualizados
-  if (typeof supabase !== 'undefined' && supabase.createClient) {
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    supabaseClient
-      .from('site_content')
-      .select('data')
-      .eq('id', 'homepage')
-      .single()
-      .then(({ data, error }) => {
-        if (!error && data && data.data) {
-          applyDataToDOM(data.data);
-          localStorage.setItem('hoh_data', JSON.stringify(data.data));
-        }
-      })
-      .catch(console.error);
-  }
+  // 2. Busca no Supabase via fetch nativo (zero dependências externas)
+  fetch(`${SUPABASE_URL}/rest/v1/site_content?id=eq.homepage&select=data`, {
+    headers: {
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+    }
+  })
+  .then(res => res.json())
+  .then(rows => {
+    if (rows && rows[0] && rows[0].data) {
+      applyDataToDOM(rows[0].data);
+      localStorage.setItem('hoh_data', JSON.stringify(rows[0].data));
+    }
+  })
+  .catch(console.error);
 });
