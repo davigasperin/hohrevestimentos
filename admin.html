@@ -43,6 +43,14 @@
             <h2 class="text-xl font-bold mb-4">O impacto visual no ambiente (Antes / Depois)</h2>
             <div class="space-y-4">
                 <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Título</label>
+                    <input type="text" id="impact-title" class="w-full border p-2 rounded" placeholder="Ex: O impacto visual no ambiente">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Descrição</label>
+                    <textarea id="impact-desc" class="w-full border p-2 rounded h-24" placeholder="Ex: Arraste o cursor para comparar a parede lisa..."></textarea>
+                </div>
+                <div>
                     <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Foto Antes (Parede Lisa)</label>
                     <input type="text" id="impact-before" class="w-full border p-2 rounded" placeholder="URL da Foto Antes">
                 </div>
@@ -149,6 +157,8 @@
                     document.getElementById('hero-image').value = cachedData.hero.image || '';
                 }
                 if (cachedData.impact) {
+                    document.getElementById('impact-title').value = cachedData.impact.title || '';
+                    document.getElementById('impact-desc').value = cachedData.impact.desc || '';
                     document.getElementById('impact-before').value = cachedData.impact.before || '';
                     document.getElementById('impact-after').value = cachedData.impact.after || '';
                 }
@@ -208,6 +218,8 @@
 
         function saveImpact() {
             saveData('impact', {
+                title: document.getElementById('impact-title').value,
+                desc: document.getElementById('impact-desc').value,
                 before: document.getElementById('impact-before').value,
                 after: document.getElementById('impact-after').value
             });

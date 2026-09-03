@@ -99,10 +99,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Atualiza Impacto Visual
     if (data.impact) {
-      const sliderImgs = document.querySelectorAll('#sliderBefore img, #sliderBefore + img, .relative.w-full.aspect-\\[4\\/3\\] img');
-      if (sliderImgs.length >= 2) {
-        if (data.impact.before) sliderImgs[0].src = data.impact.before;
-        if (data.impact.after) sliderImgs[1].src = data.impact.after;
+      if (data.impact.title) {
+        const impactTitleEl = document.querySelector('section#comparacao h2');
+        if (impactTitleEl) impactTitleEl.innerText = data.impact.title;
+      }
+      if (data.impact.desc) {
+        const impactDescEl = document.querySelector('section#comparacao p.text-brand-muted');
+        if (impactDescEl) impactDescEl.innerText = data.impact.desc;
+      }
+
+      const sliderContainer = document.getElementById('sliderContainer');
+      if (sliderContainer) {
+        const afterImg = sliderContainer.querySelector('img[src*="with-wallpaper"], img.absolute.inset-0.w-full.h-full.object-cover:not(.max-w-none)');
+        const beforeImg = document.getElementById('sliderBefore')?.querySelector('img');
+        
+        if (afterImg && data.impact.after) afterImg.src = data.impact.after;
+        if (beforeImg && data.impact.before) beforeImg.src = data.impact.before;
       }
     }
 
