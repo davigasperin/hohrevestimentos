@@ -11,17 +11,32 @@
     gtag('config', 'G-N26ZE3RGWF');
   </script>
   <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '28644999595117812');
-    fbq('track', 'PageView');
+    function loadMetaPixel() {
+      if (window.metaPixelLoaded) return;
+      window.metaPixelLoaded = true;
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '28644999595117812');
+      fbq('track', 'PageView');
+    }
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadMetaPixel, { timeout: 3000 });
+    } else {
+      setTimeout(loadMetaPixel, 2000);
+    }
+    ['touchstart', 'scroll', 'mousemove'].forEach(event => {
+      window.addEventListener(event, loadMetaPixel, { once: true, passive: true });
+    });
   </script>
+  <link rel="dns-prefetch" href="https://connect.facebook.net">
+  <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Venda e Aplicação de Papel de Parede | Curitiba, Florianópolis e Litoral SC</title>
