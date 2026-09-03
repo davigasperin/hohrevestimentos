@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <div id="admin-panel" class="max-w-4xl mx-auto hidden space-y-8 pb-16">
+    <div id="admin-panel" class="max-w-5xl mx-auto hidden space-y-8 pb-16">
         <div class="flex justify-between items-center mb-8">
             <div>
                 <h1 class="text-3xl font-bold">Painel Administrativo</h1>
@@ -43,6 +43,7 @@
             </div>
         </div>
         
+        <!-- HERO -->
         <div class="bg-white p-6 rounded shadow">
             <h2 class="text-xl font-bold mb-4">Seção Hero</h2>
             <div class="space-y-4">
@@ -66,6 +67,7 @@
             </div>
         </div>
 
+        <!-- IMPACTO VISUAL -->
         <div class="bg-white p-6 rounded shadow">
             <h2 class="text-xl font-bold mb-4">O impacto visual no ambiente (Antes / Depois)</h2>
             <div class="space-y-4">
@@ -99,90 +101,223 @@
             </div>
         </div>
 
+        <!-- PROJETOS REAIS -->
         <div class="bg-white p-6 rounded shadow">
             <h2 class="text-xl font-bold mb-4">Projetos reais executados</h2>
-            <div class="space-y-4">
+            <div class="space-y-4 mb-8">
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Subtítulo / Tag Superior</label>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Subtítulo / Tag Superior da Seção</label>
                     <input type="text" id="projects-subtitle" class="w-full border p-2 rounded" placeholder="Ex: Projetos reais executados">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Título Principal</label>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Título Principal da Seção</label>
                     <input type="text" id="projects-title" class="w-full border p-2 rounded" placeholder="Ex: Transformações recentes">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Descrição</label>
-                    <textarea id="projects-desc" class="w-full border p-2 rounded h-24" placeholder="Descrição dos projetos"></textarea>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Descrição da Seção</label>
+                    <textarea id="projects-desc" class="w-full border p-2 rounded h-20" placeholder="Descrição geral dos projetos"></textarea>
                 </div>
-                
-                <h3 class="font-semibold text-gray-700 pt-2">Fotos dos 8 Cards de Projetos</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            </div>
+
+            <h3 class="text-lg font-bold text-gray-800 mb-4 border-t pt-6">Cards de Projetos (8 itens)</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="cards-container">
+                <!-- Cards 1 a 8 gerados via script ou estático -->
+                <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 space-y-3" id="card-block-1">
+                    <h4 class="font-bold text-sm text-brand-goldDark">Card 1</h4>
                     <div>
-                        <label class="block text-xs text-gray-500 mb-1">Card 1 (Mural Infantil)</label>
-                        <div class="upload-box" id="box-project-img-1">
-                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-1')">
-                            <p class="text-sm text-gray-400" id="label-project-img-1">Enviar foto</p>
-                            <img id="preview-project-img-1" class="hidden mt-2">
-                        </div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Tag / Categoria</label>
+                        <input type="text" id="card-tag-1" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Mural Artístico">
                     </div>
                     <div>
-                        <label class="block text-xs text-gray-500 mb-1">Card 2 (Dormitório Bebê)</label>
-                        <div class="upload-box" id="box-project-img-2">
-                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-2')">
-                            <p class="text-sm text-gray-400" id="label-project-img-2">Enviar foto</p>
-                            <img id="preview-project-img-2" class="hidden mt-2">
-                        </div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Título do Projeto</label>
+                        <input type="text" id="card-title-1" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Quarto Infantil Temático">
                     </div>
                     <div>
-                        <label class="block text-xs text-gray-500 mb-1">Card 3 (Lavabo)</label>
-                        <div class="upload-box" id="box-project-img-3">
-                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-3')">
-                            <p class="text-sm text-gray-400" id="label-project-img-3">Enviar foto</p>
-                            <img id="preview-project-img-3" class="hidden mt-2">
-                        </div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Descrição</label>
+                        <textarea id="card-desc-1" class="w-full border p-2 rounded text-sm bg-white h-16" placeholder="Encaixe contínuo..."></textarea>
                     </div>
                     <div>
-                        <label class="block text-xs text-gray-500 mb-1">Card 4 (Dormitório Casal)</label>
-                        <div class="upload-box" id="box-project-img-4">
-                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-4')">
-                            <p class="text-sm text-gray-400" id="label-project-img-4">Enviar foto</p>
-                            <img id="preview-project-img-4" class="hidden mt-2">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-500 mb-1">Card 5 (Linho Acinzentado)</label>
-                        <div class="upload-box" id="box-project-img-5">
-                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-5')">
-                            <p class="text-sm text-gray-400" id="label-project-img-5">Enviar foto</p>
-                            <img id="preview-project-img-5" class="hidden mt-2">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-500 mb-1">Card 6 (Composição Neutra)</label>
-                        <div class="upload-box" id="box-project-img-6">
-                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-6')">
-                            <p class="text-sm text-gray-400" id="label-project-img-6">Enviar foto</p>
-                            <img id="preview-project-img-6" class="hidden mt-2">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-500 mb-1">Card 7 (Destaque Rubi)</label>
-                        <div class="upload-box" id="box-project-img-7">
-                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-7')">
-                            <p class="text-sm text-gray-400" id="label-project-img-7">Enviar foto</p>
-                            <img id="preview-project-img-7" class="hidden mt-2">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-500 mb-1">Card 8 (Dormitório Acolhedor)</label>
-                        <div class="upload-box" id="box-project-img-8">
-                            <input type="file" accept="image/*" onchange="handleUpload(this, 'project-img-8')">
-                            <p class="text-sm text-gray-400" id="label-project-img-8">Enviar foto</p>
-                            <img id="preview-project-img-8" class="hidden mt-2">
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Foto</label>
+                        <div class="upload-box bg-white" id="box-card-img-1">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'card-img-1')">
+                            <p class="text-xs text-gray-400" id="label-card-img-1">Enviar foto</p>
+                            <img id="preview-card-img-1" class="hidden mt-2">
                         </div>
                     </div>
                 </div>
-                <button onclick="saveProjects()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Salvar Projetos</button>
+
+                <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 space-y-3" id="card-block-2">
+                    <h4 class="font-bold text-sm text-brand-goldDark">Card 2</h4>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Tag / Categoria</label>
+                        <input type="text" id="card-tag-2" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Dormitório Bebê">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Título do Projeto</label>
+                        <input type="text" id="card-title-2" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Painel de Floresta Suave">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Descrição</label>
+                        <textarea id="card-desc-2" class="w-full border p-2 rounded text-sm bg-white h-16" placeholder="Harmonização visual..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Foto</label>
+                        <div class="upload-box bg-white" id="box-card-img-2">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'card-img-2')">
+                            <p class="text-xs text-gray-400" id="label-card-img-2">Enviar foto</p>
+                            <img id="preview-card-img-2" class="hidden mt-2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 space-y-3" id="card-block-3">
+                    <h4 class="font-bold text-sm text-brand-goldDark">Card 3</h4>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Tag / Categoria</label>
+                        <input type="text" id="card-tag-3" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Área Úmida">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Título do Projeto</label>
+                        <input type="text" id="card-title-3" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Lavabo Sofisticado">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Descrição</label>
+                        <textarea id="card-desc-3" class="w-full border p-2 rounded text-sm bg-white h-16" placeholder="Revestimento lavável..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Foto</label>
+                        <div class="upload-box bg-white" id="box-card-img-3">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'card-img-3')">
+                            <p class="text-xs text-gray-400" id="label-card-img-3">Enviar foto</p>
+                            <img id="preview-card-img-3" class="hidden mt-2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 space-y-3" id="card-block-4">
+                    <h4 class="font-bold text-sm text-brand-goldDark">Card 4</h4>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Tag / Categoria</label>
+                        <input type="text" id="card-tag-4" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Dormitório Casal">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Título do Projeto</label>
+                        <input type="text" id="card-title-4" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Textura com Fita LED">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Descrição</label>
+                        <textarea id="card-desc-4" class="w-full border p-2 rounded text-sm bg-white h-16" placeholder="Aplicação milimétrica..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Foto</label>
+                        <div class="upload-box bg-white" id="box-card-img-4">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'card-img-4')">
+                            <p class="text-xs text-gray-400" id="label-card-img-4">Enviar foto</p>
+                            <img id="preview-card-img-4" class="hidden mt-2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 space-y-3" id="card-block-5">
+                    <h4 class="font-bold text-sm text-brand-goldDark">Card 5</h4>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Tag / Categoria</label>
+                        <input type="text" id="card-tag-5" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Textura Têxtil">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Título do Projeto</label>
+                        <input type="text" id="card-title-5" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Linho Acinzentado">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Descrição</label>
+                        <textarea id="card-desc-5" class="w-full border p-2 rounded text-sm bg-white h-16" placeholder="Toque refinado..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Foto</label>
+                        <div class="upload-box bg-white" id="box-card-img-5">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'card-img-5')">
+                            <p class="text-xs text-gray-400" id="label-card-img-5">Enviar foto</p>
+                            <img id="preview-card-img-5" class="hidden mt-2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 space-y-3" id="card-block-6">
+                    <h4 class="font-bold text-sm text-brand-goldDark">Card 6</h4>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Tag / Categoria</label>
+                        <input type="text" id="card-tag-6" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Ambiente Integrado">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Título do Projeto</label>
+                        <input type="text" id="card-title-6" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Composição Neutra">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Descrição</label>
+                        <textarea id="card-desc-6" class="w-full border p-2 rounded text-sm bg-white h-16" placeholder="Base discreta..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Foto</label>
+                        <div class="upload-box bg-white" id="box-card-img-6">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'card-img-6')">
+                            <p class="text-xs text-gray-400" id="label-card-img-6">Enviar foto</p>
+                            <img id="preview-card-img-6" class="hidden mt-2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 space-y-3" id="card-block-7">
+                    <h4 class="font-bold text-sm text-brand-goldDark">Card 7</h4>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Tag / Categoria</label>
+                        <input type="text" id="card-tag-7" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Ponto Focal">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Título do Projeto</label>
+                        <input type="text" id="card-title-7" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Parede Destaque Rubi">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Descrição</label>
+                        <textarea id="card-desc-7" class="w-full border p-2 rounded text-sm bg-white h-16" placeholder="Acabamento aveludado..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Foto</label>
+                        <div class="upload-box bg-white" id="box-card-img-7">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'card-img-7')">
+                            <p class="text-xs text-gray-400" id="label-card-img-7">Enviar foto</p>
+                            <img id="preview-card-img-7" class="hidden mt-2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 space-y-3" id="card-block-8">
+                    <h4 class="font-bold text-sm text-brand-goldDark">Card 8</h4>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Tag / Categoria</label>
+                        <input type="text" id="card-tag-8" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Suíte & Conforto">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Título do Projeto</label>
+                        <input type="text" id="card-title-8" class="w-full border p-2 rounded text-sm bg-white" placeholder="Ex: Dormitório Acolhedor">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Descrição</label>
+                        <textarea id="card-desc-8" class="w-full border p-2 rounded text-sm bg-white h-16" placeholder="Sensação de aconchego..."></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs text-gray-600 font-semibold mb-1">Foto</label>
+                        <div class="upload-box bg-white" id="box-card-img-8">
+                            <input type="file" accept="image/*" onchange="handleUpload(this, 'card-img-8')">
+                            <p class="text-xs text-gray-400" id="label-card-img-8">Enviar foto</p>
+                            <img id="preview-card-img-8" class="hidden mt-2">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6">
+                <button onclick="saveProjects()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700">Salvar Todos os Projetos e Cards</button>
             </div>
         </div>
     </div>
@@ -307,8 +442,20 @@
                     document.getElementById('projects-subtitle').value = cachedData.projects.subtitle || '';
                     document.getElementById('projects-title').value = cachedData.projects.title || '';
                     document.getElementById('projects-desc').value = cachedData.projects.desc || '';
+
+                    const cards = cachedData.projects.cards || [];
                     for (let i = 1; i <= 8; i++) {
-                        setPreview(`project-img-${i}`, cachedData.projects[`img${i}`]);
+                        const card = cards[i - 1] || {};
+                        const tagEl = document.getElementById(`card-tag-${i}`);
+                        const titleEl = document.getElementById(`card-title-${i}`);
+                        const descEl = document.getElementById(`card-desc-${i}`);
+                        if (tagEl) tagEl.value = card.tag || '';
+                        if (titleEl) titleEl.value = card.title || '';
+                        if (descEl) descEl.value = card.desc || '';
+                        
+                        // Imagem salva no card ou fallback no formato legado img${i}
+                        const imgUrl = card.image || cachedData.projects[`img${i}`];
+                        setPreview(`card-img-${i}`, imgUrl);
                     }
                 }
                 status.textContent = 'Pronto';
@@ -378,14 +525,23 @@
         }
 
         function saveProjects() {
+            const cards = [];
+            for (let i = 1; i <= 8; i++) {
+                cards.push({
+                    tag: document.getElementById(`card-tag-${i}`)?.value || '',
+                    title: document.getElementById(`card-title-${i}`)?.value || '',
+                    desc: document.getElementById(`card-desc-${i}`)?.value || '',
+                    image: getUrl(`card-img-${i}`)
+                });
+            }
+
             const projectsData = {
                 subtitle: document.getElementById('projects-subtitle').value,
                 title: document.getElementById('projects-title').value,
-                desc: document.getElementById('projects-desc').value
+                desc: document.getElementById('projects-desc').value,
+                cards: cards
             };
-            for (let i = 1; i <= 8; i++) {
-                projectsData[`img${i}`] = getUrl(`project-img-${i}`);
-            }
+
             saveData('projects', projectsData);
         }
     </script>

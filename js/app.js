@@ -132,10 +132,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (titleEl && data.projects.title) titleEl.innerText = data.projects.title;
         if (descEl && data.projects.desc) descEl.innerText = data.projects.desc;
 
-        const cardImgs = projSection.querySelectorAll('img');
+        const cardsBlocks = projSection.querySelectorAll('.grid > div.border');
+        const cardsData = data.projects.cards || [];
+
         for (let i = 1; i <= 8; i++) {
-          if (cardImgs[i - 1] && data.projects[`img${i}`]) {
-            cardImgs[i - 1].src = data.projects[`img${i}`];
+          const cardEl = cardsBlocks[i - 1];
+          const cardData = cardsData[i - 1] || {};
+
+          if (cardEl) {
+            const imgEl = cardEl.querySelector('img');
+            const tagEl = cardEl.querySelector('span.text-\\[10px\\]');
+            const cardTitleEl = cardEl.querySelector('h3');
+            const cardDescEl = cardEl.querySelector('p.text-xs.text-brand-muted');
+
+            const imgSrc = cardData.image || data.projects[`img${i}`];
+            if (imgEl && imgSrc) imgEl.src = imgSrc;
+            if (tagEl && cardData.tag) tagEl.innerText = cardData.tag;
+            if (cardTitleEl && cardData.title) cardTitleEl.innerText = cardData.title;
+            if (cardDescEl && cardData.desc) cardDescEl.innerText = cardData.desc;
           }
         }
       }
