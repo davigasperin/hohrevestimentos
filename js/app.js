@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Helper para disparar eventos de conversão
   const trackConversion = (eventName, params = {}) => {
+    if (typeof loadTrackingScripts === 'function') loadTrackingScripts();
     if (typeof fbq === 'function') {
       fbq('track', eventName === 'generate_lead' ? 'Lead' : 'Contact', params);
     }
