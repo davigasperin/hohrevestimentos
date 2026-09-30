@@ -320,6 +320,45 @@
                 <button onclick="saveProjects()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700">Salvar Todos os Projetos e Cards</button>
             </div>
         </div>
+
+        <!-- BOTÕES & CONTATO -->
+        <div class="bg-white p-6 rounded shadow">
+            <h2 class="text-xl font-bold mb-4">Textos dos Botões e WhatsApp</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Número do WhatsApp (DDI + DDD + Número, apenas dígitos)</label>
+                    <input type="text" id="contact-whatsapp" class="w-full border p-2 rounded" placeholder="Ex: 5541992145814">
+                    <p class="text-xs text-gray-400 mt-1">Atualiza automaticamente todos os links e o formulário de contato do site.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Botão Cabeçalho / Menu</label>
+                        <input type="text" id="btn-header" class="w-full border p-2 rounded" placeholder="Ex: Solicitar Orçamento">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Botão Hero Principal</label>
+                        <input type="text" id="btn-hero-primary" class="w-full border p-2 rounded" placeholder="Ex: Solicitar orçamento">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Botão Hero Secundário</label>
+                        <input type="text" id="btn-hero-secondary" class="w-full border p-2 rounded" placeholder="Ex: Ver transformações">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Botão Padrão Cards de Projetos</label>
+                        <input type="text" id="btn-projects" class="w-full border p-2 rounded" placeholder="Ex: Solicitar similar →">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Botão Garantia HOH</label>
+                        <input type="text" id="btn-guarantee" class="w-full border p-2 rounded" placeholder="Ex: Falar com especialista">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-600 uppercase mb-1">Botão Envio do Formulário</label>
+                        <input type="text" id="btn-form" class="w-full border p-2 rounded" placeholder="Ex: Enviar mensagem no WhatsApp">
+                    </div>
+                </div>
+                <button onclick="saveButtonsAndContact()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Salvar Botões e WhatsApp</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -460,6 +499,23 @@
                         setPreview(`card-img-${i}`, imgUrl);
                     }
                 }
+                if (cachedData.contact) {
+                    const waInput = document.getElementById('contact-whatsapp');
+                    if (waInput) waInput.value = cachedData.contact.whatsapp_number || '';
+                }
+                if (cachedData.buttons) {
+                    const b = cachedData.buttons;
+                    const setVal = (id, val) => {
+                        const el = document.getElementById(id);
+                        if (el) el.value = val || '';
+                    };
+                    setVal('btn-header', b.cta_header);
+                    setVal('btn-hero-primary', b.cta_hero_primary);
+                    setVal('btn-hero-secondary', b.cta_hero_secondary);
+                    setVal('btn-projects', b.cta_projects);
+                    setVal('btn-guarantee', b.cta_guarantee);
+                    setVal('btn-form', b.cta_form);
+                }
                 status.textContent = 'Pronto';
             } catch (err) {
                 console.error(err);
@@ -545,6 +601,50 @@
             };
 
             saveData('projects', projectsData);
+        }
+
+        async function saveButtonsAndContact() {
+            const rawPhone = document.getElementById('contact-whatsapp')?.value || '';
+            const cleanPhone = rawPhone.replace(/\D/g, '');
+
+            const buttonsData = {
+                cta_header: document.getElementById('btn-header')?.value || '',
+                cta_hero_primary: document.getElementById('btn-hero-primary')?.value || '',
+                cta_hero_secondary: document.getElementById('btn-hero-secondary')?.value || '',
+                cta_projects: document.getElementById('btn-projects')?.value || '',
+                cta_guarantee: document.getElementById('btn-guarantee')?.value || '',
+                cta_form: document.getElementById('btn-form')?.value || ''
+            };
+
+            const contactData = {
+                whatsapp_number: cleanPhone
+            };
+
+            const status = document.getElementById('save-status');
+            status.textContent = 'Salvando...';
+            cachedData.buttons = buttonsData;
+            cachedData.contact = contactData;
+
+            try {
+                const { error } = await supabaseClient
+                    .from('site_content')
+                    .upsert({
+                        id: 'homepage',
+                        data: cachedData,
+                        updated_at: new Date().toISOString()
+                    });
+
+                if (error) {
+                    alert('Erro ao salvar: ' + error.message);
+                    status.textContent = 'Erro';
+                } else {
+                    alert('Botões e WhatsApp salvos com sucesso!');
+                    status.textContent = 'Salvo';
+                }
+            } catch (err) {
+                alert('Erro de conexão: ' + err.message);
+                status.textContent = 'Erro de conexão';
+            }
         }
     </script>
 </body>

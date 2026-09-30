@@ -61,6 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  let currentWhatsAppNumber = '5541992145814';
+
   const form = document.getElementById('leadForm');
   if (form) {
     form.addEventListener('submit', (e) => {
@@ -70,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const text = `Olá! Meu nome é ${encodeURIComponent(name)} e gostaria de um orçamento para aplicação de papel de parede no meu/minha ${encodeURIComponent(ambiente)}.`;
       trackConversion('generate_lead', { ambiente: ambiente, name: name });
-      window.open(`https://wa.me/5541992145814?text=${text}`, '_blank');
+      window.open(`https://wa.me/${currentWhatsAppNumber}?text=${text}`, '_blank');
     });
   }
 
@@ -152,6 +154,46 @@ document.addEventListener('DOMContentLoaded', () => {
             if (cardDescEl && cardData.desc) cardDescEl.innerText = cardData.desc;
           }
         }
+      }
+    }
+
+    // Atualiza Textos dos Botões
+    if (data.buttons) {
+      const b = data.buttons;
+      const updateCTA = (selector, text, isHeroPrimary = false) => {
+        if (!text) return;
+        document.querySelectorAll(selector).forEach(el => {
+          if (isHeroPrimary) {
+            const span = el.querySelector('span:first-child');
+            if (span) span.textContent = text;
+          } else {
+            el.textContent = text;
+          }
+        });
+      };
+
+      updateCTA('[data-cta="header"]', b.cta_header);
+      updateCTA('[data-cta="hero-primary"]', b.cta_hero_primary, true);
+      updateCTA('[data-cta="hero-secondary"]', b.cta_hero_secondary);
+      updateCTA('[data-cta="projects"]', b.cta_projects);
+      updateCTA('[data-cta="guarantee"]', b.cta_guarantee);
+      updateCTA('[data-cta="form-submit"]', b.cta_form);
+    }
+
+    // Atualiza WhatsApp em todos os links e submit do formulário
+    if (data.contact && data.contact.whatsapp_number) {
+      const num = String(data.contact.whatsapp_number).replace(/\D/g, '');
+      if (num) {
+        currentWhatsAppNumber = num;
+        document.querySelectorAll('a[data-wa-link]').forEach(a => {
+          try {
+            const url = new URL(a.href);
+            const textParam = url.searchParams.get('text');
+            a.href = `https://wa.me/${num}${textParam ? `?text=${encodeURIComponent(textParam)}` : ''}`;
+          } catch (_) {
+            a.href = `https://wa.me/${num}`;
+          }
+        });
       }
     }
   };
